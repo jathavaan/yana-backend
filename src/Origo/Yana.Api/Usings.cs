@@ -1,0 +1,14 @@
+﻿global using Microsoft.AspNetCore;
+global using MediatR;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.ApiExplorer;
+global using Microsoft.EntityFrameworkCore;
+global using Serilog;
+global using Serilog.Debugging;
+global using Swashbuckle.AspNetCore.Filters;
+global using System.Reflection;
+global using Microsoft.AspNetCore.Authentication.Cookies;
+global using Microsoft.AspNetCore.Identity;
+global using Origo.Application.Configurations;
+global using Origo.Application;
+global using Origo.Infrastructure;
