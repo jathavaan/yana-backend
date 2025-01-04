@@ -1,13 +1,10 @@
-﻿namespace Origo.Application.Configurations;
+﻿namespace Yana.Api.Configurations;
 
 public static class AppConfiguration
 {
-    public static WebApplication Configure(this WebApplication app)
+    public static WebApplication ConfigureApp(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
-        {
-            app.ConfigureSwagger();
-        }
+        if (app.Environment.IsDevelopment()) app.ConfigureSwagger();
 
         app.UseHttpsRedirection();
         app.MapControllers();

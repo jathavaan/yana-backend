@@ -1,4 +1,4 @@
-﻿namespace Origo.Application.Common;
+﻿namespace Yana.Application.Common;
 
 // TODO: Implement event bus to publish events
 public interface ICommandResponse

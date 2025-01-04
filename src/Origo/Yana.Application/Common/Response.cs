@@ -1,8 +1,8 @@
-﻿namespace Origo.Application.Common;
+﻿namespace Yana.Application.Common;
 
 public abstract class Response
 {
-    public ErrorCode ErrorCode { get; set; }
+    public ErrorCode? ErrorCode { get; set; }
     public string? ErrorMessage { get; set; }
 }
 

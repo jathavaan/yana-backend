@@ -1,10 +1,9 @@
-﻿
-namespace Origo.Infrastructure;
+﻿namespace Yana.Infrastructure;
 
 public static class InfrastructureServiceRegistration
 {
-   public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
-   {
-      return services;
-   }
+    public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+    {
+        return services;
+    }
 }

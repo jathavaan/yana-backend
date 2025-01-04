@@ -1,4 +1,4 @@
-﻿namespace Origo.Application.Common;
+﻿namespace Yana.Application.Common;
 
 public class Request<TResponse> : IRequest<TResponse> where TResponse : Response
 {

@@ -1,4 +1,4 @@
-﻿namespace Origo.Application.Common;
+﻿namespace Yana.Application.Common;
 
 public interface ICommand<out TResponse> : IRequest<TResponse>
 {

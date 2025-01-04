@@ -4,7 +4,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Origo.Api</RootNamespace>
+        <RootNamespace>Yana.Api</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,12 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Yana.Application\Yana.Application.csproj" />
-        <ProjectReference Include="..\Yana.Infrastructure\Yana.Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Swagger\ModelSamples\"/>
+        <ProjectReference Include="..\Yana.Application\Yana.Application.csproj"/>
+        <ProjectReference Include="..\Yana.Infrastructure\Yana.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

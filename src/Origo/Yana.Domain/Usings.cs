@@ -1,5 +1,1 @@
-﻿namespace Origo.Domain;
-
-public class Usings
-{
-}
+﻿global using Yana.Domain.Enums;

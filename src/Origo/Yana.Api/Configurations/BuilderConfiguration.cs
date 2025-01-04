@@ -1,9 +1,8 @@
-﻿
-namespace Origo.Application.Configurations;
+﻿namespace Yana.Api.Configurations;
 
 internal static class BuilderConfiguration
 {
-    internal static WebApplicationBuilder Configure(this WebApplicationBuilder builder)
+    internal static WebApplicationBuilder ConfigureBuilder(this WebApplicationBuilder builder)
     {
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices();

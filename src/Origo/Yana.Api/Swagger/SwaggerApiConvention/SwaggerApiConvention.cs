@@ -1,4 +1,4 @@
-﻿namespace Origo.Api.Swagger.SwaggerApiConvention;
+﻿namespace Yana.Api.Swagger.SwaggerApiConvention;
 
 public static class SwaggerApiConvention
 {

@@ -1,4 +1,6 @@
-﻿namespace Origo.Application;
+﻿using Yana.Application.Middleware;
+
+namespace Yana.Application;
 
 public static class ApplicationServiceRegistration
 {

@@ -1,4 +1,6 @@
-﻿namespace Origo.Application.Middleware;
+﻿using Yana.Application.Common;
+
+namespace Yana.Application.Middleware;
 
 public class ErrorHandlingPipelineBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull

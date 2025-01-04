@@ -1,4 +1,4 @@
-﻿namespace Origo.Application.Common;
+﻿namespace Yana.Application.Common;
 
 public enum ErrorCode
 {
