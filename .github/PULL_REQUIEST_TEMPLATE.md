@@ -1,4 +1,4 @@
-Closes #<issue-id>
+Closes #issue-id
 
 ## Intended changes
 A brief description of the intented changes
