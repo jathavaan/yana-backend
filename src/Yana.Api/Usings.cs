@@ -13,3 +13,4 @@ global using Yana.Api.Base;
 global using Yana.Api.Swagger.SwaggerApiConvention;
 global using Yana.Application;
 global using Yana.Infrastructure;
+global using Yana.Persistence.Context;
