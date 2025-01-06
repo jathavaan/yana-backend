@@ -42,6 +42,6 @@ public class TileConfiguration : IEntityTypeConfiguration<Tile>
             .HasMany(x => x.Users)
             .WithMany(x => x.Tiles)
             .UsingEntity<TileHasUser>()
-            .HasKey(x => new { x.Tile, x.User });
+            .HasKey(x => new { x.TileId, x.UserId });
     }
 }

@@ -14,5 +14,5 @@ public class Citation
     public DateOnly RetrievedDate { get; set; }
 
     public virtual User User { get; set; } = null!;
-    public virtual Document Document { get; set; } = null!;
+    public virtual Document? Document { get; set; }
 }

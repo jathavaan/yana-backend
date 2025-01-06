@@ -25,6 +25,6 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
             .HasMany(x => x.Documents)
             .WithMany(x => x.Tags)
             .UsingEntity<DocumentHasTag>()
-            .HasKey(x => new { x.Document, x.Tag });
+            .HasKey(x => new { x.DocumentId, x.TagId });
     }
 }

@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Yana.Api</RootNamespace>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,6 +26,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Yana.Application\Yana.Application.csproj"/>
         <ProjectReference Include="..\Yana.Infrastructure\Yana.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Yana.Persistence\Yana.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

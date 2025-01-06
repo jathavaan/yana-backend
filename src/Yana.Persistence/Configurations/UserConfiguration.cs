@@ -11,19 +11,19 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired();
 
         builder.Property(x => x.AuthProvider)
-            .HasDefaultValue(AuthProvider.Google);
+            .IsRequired();
 
         builder
             .HasMany(x => x.Documents)
             .WithMany(x => x.Users)
             .UsingEntity<DocumentHasUser>()
-            .HasKey(x => new { x.Document, x.User });
+            .HasKey(x => new { x.DocumentId, x.UserId });
 
         builder
             .HasMany(x => x.Tiles)
             .WithMany(x => x.Users)
             .UsingEntity<TileHasUser>()
-            .HasKey(x => new { x.Tile, x.User });
+            .HasKey(x => new { x.TileId, x.UserId });
 
         builder
             .HasMany(x => x.Tags)

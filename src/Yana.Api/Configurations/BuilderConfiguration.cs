@@ -9,20 +9,30 @@ internal static class BuilderConfiguration
 
         builder.ConfigureControllers();
         builder.ConfigureSwagger();
+        builder.ConfigureDatabase();
 
         return builder;
     }
 
 
-    private static WebApplicationBuilder ConfigureControllers(this WebApplicationBuilder builder)
+    private static void ConfigureControllers(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
-        return builder;
     }
 
     private static void ConfigureSwagger(this WebApplicationBuilder builder)
     {
         builder.Services.AddSwaggerGen(options => { options.ExampleFilters(); });
         builder.Services.AddSwaggerExamplesFromAssemblies(Assembly.GetEntryAssembly());
+    }
+
+    private static void ConfigureDatabase(this WebApplicationBuilder builder)
+    {
+        if (builder.Environment.IsDevelopment())
+        {
+            builder.Services.AddDbContext<YanaDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:YanaDb").Value)
+                    .EnableSensitiveDataLogging());
+        }
     }
 }

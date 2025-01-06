@@ -4,22 +4,10 @@ public class DocumentReferenceConfiguration : IEntityTypeConfiguration<DocumentR
 {
     public void Configure(EntityTypeBuilder<DocumentReference> builder)
     {
-        builder.HasKey(x => new { x.ParentDocument, x.ChildDocument });
+        // builder.HasKey(x => new { x.ParentDocumentId, x.ChildDocumentId });
         builder.HasAlternateKey(x => x.Id);
 
         builder.Property(x => x.Id)
-            .IsRequired();
-
-        builder
-            .HasOne(x => x.ParentDocument)
-            .WithMany(x => x.DocumentReferences)
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
-
-        builder
-            .HasOne(x => x.ChildDocument)
-            .WithMany(x => x.DocumentReferences)
-            .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
     }
 }

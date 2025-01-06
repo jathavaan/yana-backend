@@ -23,13 +23,13 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
             .HasMany(x => x.Users)
             .WithMany(x => x.Documents)
             .UsingEntity<DocumentHasUser>()
-            .HasKey(x => new { x.Document, x.User });
+            .HasKey(x => new { x.DocumentId, x.UserId });
 
         builder
             .HasMany(x => x.Tags)
             .WithMany(x => x.Documents)
             .UsingEntity<DocumentHasTag>()
-            .HasKey(x => new { x.Document, x.Tag });
+            .HasKey(x => new { x.DocumentId, x.TagId });
 
         builder
             .HasMany(x => x.Tiles)
@@ -38,22 +38,20 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
             .IsRequired();
 
         builder
-            .HasMany(x => x.Citations)
-            .WithOne(x => x.Document)
-            .OnDelete(DeleteBehavior.SetNull);
-
-        builder
-            .HasMany(x => x.DocumentReferences)
-            .WithOne(x => x.ParentDocument)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(x => x.ParentDocument);
-
-        builder
-            .HasMany(x => x.DocumentReferences)
-            .WithOne(x => x.ChildDocument)
-            .IsRequired()
-            .OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(x => x.ChildDocument);
+            .HasMany(x => x.ParentDocuments)
+            .WithMany(x => x.ChildDocuments)
+            .UsingEntity<DocumentReference>(
+                r => r
+                    .HasOne(x => x.ParentDocument)
+                    .WithMany()
+                    .HasForeignKey(x => x.ParentDocumentId)
+                    .OnDelete(DeleteBehavior.Restrict),
+                l => l
+                    .HasOne(x => x.ChildDocument)
+                    .WithMany()
+                    .HasForeignKey(x => x.ChildDocumentId)
+                    .OnDelete(DeleteBehavior.Restrict)
+            )
+            .HasKey(x => new { x.ParentDocumentId, x.ChildDocumentId });
     }
 }
