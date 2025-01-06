@@ -2,9 +2,10 @@
 
 public class Document
 {
-    public string Id { get; set; } = null!;
+    public string Id { get; init; } = Guid.NewGuid().ToString();
     public DocumentType Type { get; set; }
-    public GridSize GridSize { get;set; }
+    public GridSize GridSize { get; set; }
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
