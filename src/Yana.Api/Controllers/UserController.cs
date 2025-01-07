@@ -1,8 +1,10 @@
-﻿namespace Yana.Api.Controllers;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace Yana.Api.Controllers;
 
 public class UserController(IMediator mediator) : YanaControllerBase(mediator)
 {
-    [HttpGet("{userId}")]
+    [HttpGet("id/{userId}")]
     [Produces("application/json")]
     [ApiConventionMethod(typeof(SwaggerApiConvention), nameof(SwaggerApiConvention.StatusResponseTypes))]
     [ActionName(nameof(GetUserById))]
@@ -11,10 +13,11 @@ public class UserController(IMediator mediator) : YanaControllerBase(mediator)
         return userId;
     }
 
-    [HttpGet("{email}")]
+    [HttpGet("email/{email}")]
     [Produces("application/json")]
     [ApiConventionMethod(typeof(SwaggerApiConvention), nameof(SwaggerApiConvention.StatusResponseTypes))]
     [ActionName(nameof(GetUserByEmail))]
+    [Authorize]
     public string GetUserByEmail(string email)
     {
         return email;
