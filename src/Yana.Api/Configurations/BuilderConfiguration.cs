@@ -32,6 +32,9 @@ internal static class BuilderConfiguration
     {
         builder.Services.Configure<GoogleAuthenticationOptions>(
             builder.Configuration.GetSection(GoogleAuthenticationOptions.SectionName));
+
+        builder.Services.Configure<ConnectionStringsOptions>(
+            builder.Configuration.GetSection(ConnectionStringsOptions.SectionName));
     }
 
     private static void ConfigureSwagger(this WebApplicationBuilder builder)
@@ -78,7 +81,12 @@ internal static class BuilderConfiguration
         if (builder.Environment.IsDevelopment())
         {
             builder.Services.AddDbContext<YanaDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:YanaDb").Value)
+                options.UseSqlServer(
+                        builder.Configuration
+                            .GetSection(ConnectionStringsOptions.SectionName)
+                            .Get<ConnectionStringsOptions>()!
+                            .YanaDb
+                    )
                     .EnableSensitiveDataLogging());
         }
     }
