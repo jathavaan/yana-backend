@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Yana.Api</RootNamespace>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>8565735b-52c2-4a94-81f0-a1d1499b5cee</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

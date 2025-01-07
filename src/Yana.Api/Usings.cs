@@ -10,6 +10,7 @@ global using System.Reflection;
 global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Identity;
 global using Yana.Api.Base;
+global using Yana.Api.Options;
 global using Yana.Api.Swagger.SwaggerApiConvention;
 global using Yana.Application;
 global using Yana.Infrastructure;

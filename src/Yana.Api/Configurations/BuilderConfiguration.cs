@@ -4,6 +4,8 @@ internal static class BuilderConfiguration
 {
     internal static WebApplicationBuilder ConfigureBuilder(this WebApplicationBuilder builder)
     {
+        builder.ConfigureOptions();
+
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices();
 
@@ -18,6 +20,12 @@ internal static class BuilderConfiguration
     private static void ConfigureControllers(this WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
+    }
+
+    private static void ConfigureOptions(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<GoogleAuthenticationOptions>(
+            builder.Configuration.GetSection(GoogleAuthenticationOptions.SectionName));
     }
 
     private static void ConfigureSwagger(this WebApplicationBuilder builder)
