@@ -1,8 +1,8 @@
 ﻿namespace Yana.Persistence.Configurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class UserConfiguration : IEntityTypeConfiguration<UserProfile>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<UserProfile> builder)
     {
         builder.HasKey(x => x.Id);
 
@@ -10,7 +10,17 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .ValueGeneratedNever()
             .IsRequired();
 
-        builder.Property(x => x.AuthProvider)
+        builder.Property(x => x.Email)
+            .IsRequired()
+            .ValueGeneratedNever();
+
+        builder.Property(x => x.FirstName)
+            .IsRequired();
+
+        builder.Property(x => x.LastName)
+            .IsRequired();
+
+        builder.Property(x => x.CreatedDate)
             .IsRequired();
 
         builder
@@ -27,12 +37,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .HasMany(x => x.Tags)
-            .WithOne(x => x.User)
+            .WithOne(x => x.UserProfile)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasMany(x => x.Citations)
-            .WithOne(x => x.User)
+            .WithOne(x => x.UserProfile)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(x => x.ExternalUserProfiles)
+            .WithOne(x => x.User)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
     }
 }

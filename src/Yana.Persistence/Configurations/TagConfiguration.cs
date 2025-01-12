@@ -17,7 +17,7 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
             .IsRequired();
 
         builder
-            .HasOne(x => x.User)
+            .HasOne(x => x.UserProfile)
             .WithMany(x => x.Tags)
             .OnDelete(DeleteBehavior.Cascade);
 

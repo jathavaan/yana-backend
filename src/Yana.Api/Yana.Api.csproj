@@ -6,10 +6,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>Yana.Api</RootNamespace>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <UserSecretsId>8565735b-52c2-4a94-81f0-a1d1499b5cee</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="MediatR" Version="12.4.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
@@ -26,7 +29,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Yana.Application\Yana.Application.csproj"/>
         <ProjectReference Include="..\Yana.Infrastructure\Yana.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Yana.Persistence\Yana.Persistence.csproj" />
+        <ProjectReference Include="..\Yana.Persistence\Yana.Persistence.csproj"/>
     </ItemGroup>
 
 </Project>

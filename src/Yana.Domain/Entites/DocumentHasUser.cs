@@ -9,5 +9,5 @@ public class DocumentHasUser
     public DateTime UpdatedDate { get; set; }
 
     public virtual Document Document { get; set; } = null!;
-    public virtual User User { get; set; } = null!;
+    public virtual UserProfile UserProfile { get; set; } = null!;
 }

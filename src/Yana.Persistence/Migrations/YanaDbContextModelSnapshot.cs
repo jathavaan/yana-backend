@@ -58,7 +58,7 @@ namespace Yana.Persistence.Migrations
                     b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserProfileId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -69,7 +69,7 @@ namespace Yana.Persistence.Migrations
 
                     b.HasIndex("DocumentId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("Citations");
                 });
@@ -125,9 +125,13 @@ namespace Yana.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("DocumentId", "UserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("DocumentHasUser");
                 });
@@ -153,6 +157,31 @@ namespace Yana.Persistence.Migrations
                     b.ToTable("DocumentReferences");
                 });
 
+            modelBuilder.Entity("Yana.Domain.Entites.ExternalUserProfile", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AuthProvider")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExternalUserProfiles");
+                });
+
             modelBuilder.Entity("Yana.Domain.Entites.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -168,13 +197,13 @@ namespace Yana.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UserProfileId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("Tags");
                 });
@@ -227,27 +256,40 @@ namespace Yana.Persistence.Migrations
                     b.Property<DateTime>("EditedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("TileId", "UserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("TileHasUser");
                 });
 
-            modelBuilder.Entity("Yana.Domain.Entites.User", b =>
+            modelBuilder.Entity("Yana.Domain.Entites.UserProfile", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AuthProvider")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastLogindDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("UserProfiles");
                 });
 
             modelBuilder.Entity("Yana.Domain.Entites.Citation", b =>
@@ -257,15 +299,15 @@ namespace Yana.Persistence.Migrations
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("Yana.Domain.Entites.User", "User")
+                    b.HasOne("Yana.Domain.Entites.UserProfile", "UserProfile")
                         .WithMany("Citations")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Document");
 
-                    b.Navigation("User");
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("Yana.Domain.Entites.DocumentHasTag", b =>
@@ -295,15 +337,15 @@ namespace Yana.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Yana.Domain.Entites.User", "User")
+                    b.HasOne("Yana.Domain.Entites.UserProfile", "UserProfile")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Document");
 
-                    b.Navigation("User");
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("Yana.Domain.Entites.DocumentReference", b =>
@@ -325,15 +367,26 @@ namespace Yana.Persistence.Migrations
                     b.Navigation("ParentDocument");
                 });
 
-            modelBuilder.Entity("Yana.Domain.Entites.Tag", b =>
+            modelBuilder.Entity("Yana.Domain.Entites.ExternalUserProfile", b =>
                 {
-                    b.HasOne("Yana.Domain.Entites.User", "User")
-                        .WithMany("Tags")
+                    b.HasOne("Yana.Domain.Entites.UserProfile", "User")
+                        .WithMany("ExternalUserProfiles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Yana.Domain.Entites.Tag", b =>
+                {
+                    b.HasOne("Yana.Domain.Entites.UserProfile", "UserProfile")
+                        .WithMany("Tags")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("Yana.Domain.Entites.Tile", b =>
@@ -355,15 +408,15 @@ namespace Yana.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Yana.Domain.Entites.User", "User")
+                    b.HasOne("Yana.Domain.Entites.UserProfile", "UserProfile")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tile");
 
-                    b.Navigation("User");
+                    b.Navigation("UserProfile");
                 });
 
             modelBuilder.Entity("Yana.Domain.Entites.Document", b =>
@@ -373,9 +426,11 @@ namespace Yana.Persistence.Migrations
                     b.Navigation("Tiles");
                 });
 
-            modelBuilder.Entity("Yana.Domain.Entites.User", b =>
+            modelBuilder.Entity("Yana.Domain.Entites.UserProfile", b =>
                 {
                     b.Navigation("Citations");
+
+                    b.Navigation("ExternalUserProfiles");
 
                     b.Navigation("Tags");
                 });

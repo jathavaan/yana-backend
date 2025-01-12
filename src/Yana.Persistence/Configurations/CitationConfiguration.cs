@@ -23,7 +23,7 @@ public class CitationConfiguration : IEntityTypeConfiguration<Citation>
             .IsRequired();
 
         builder
-            .HasOne(x => x.User)
+            .HasOne(x => x.UserProfile)
             .WithMany(x => x.Citations)
             .OnDelete(DeleteBehavior.Cascade);
 

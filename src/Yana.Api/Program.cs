@@ -1,8 +1,8 @@
 using Yana.Api.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.ConfigureBuilder();
+builder.Configure();
 
 var app = builder.Build();
-app.ConfigureApp();
+app.Configure();
 app.Run();
