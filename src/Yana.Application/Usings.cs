@@ -2,3 +2,10 @@
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using FluentValidation;
+global using Humanizer;
+global using Yana.Domain.Entites;
+global using Yana.Application.ViewModels;
+global using Yana.Application.Common;
+global using Yana.Domain.Entites;
+global using Yana.Domain.Enums;
+global using Yana.Application.Contracts.UserService;

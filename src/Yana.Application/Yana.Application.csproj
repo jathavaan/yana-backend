@@ -9,9 +9,18 @@
 
     <ItemGroup>
         <PackageReference Include="FluentValidation" Version="11.11.0"/>
+        <PackageReference Include="Humanizer" Version="2.14.1" />
         <PackageReference Include="MediatR" Version="12.4.1"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Yana.Domain\Yana.Domain.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Auth\Command\" />
     </ItemGroup>
 
 </Project>

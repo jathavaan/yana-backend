@@ -11,5 +11,5 @@ public class Tile
     public DateTime CreatedDate { get; set; } = DateTime.Now;
 
     public virtual Document Document { get; set; } = null!;
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<UserProfile> Users { get; set; } = new List<UserProfile>();
 }

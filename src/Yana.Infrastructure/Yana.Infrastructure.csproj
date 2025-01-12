@@ -8,7 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="9.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Yana.Application\Yana.Application.csproj"/>
+        <ProjectReference Include="..\Yana.Persistence\Yana.Persistence.csproj"/>
     </ItemGroup>
 
 </Project>

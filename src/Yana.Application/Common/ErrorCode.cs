@@ -6,6 +6,7 @@ public enum ErrorCode
     ArgumentNull,
     BusinessRuleValidation,
     Forbidden,
+    Unauthorized,
     NotFound,
     RequestValidationFailed,
     Unknown

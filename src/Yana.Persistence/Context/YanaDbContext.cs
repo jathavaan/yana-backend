@@ -10,7 +10,8 @@ public class YanaDbContext(DbContextOptions<YanaDbContext> options) : DbContext(
     public virtual DbSet<Tag> Tags { get; set; }
     public virtual DbSet<Tile> Tiles { get; set; }
     public virtual DbSet<TileHasUser> TileHasUser { get; set; }
-    public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<UserProfile> UserProfiles { get; set; }
+    public virtual DbSet<ExternalUserProfile> ExternalUserProfiles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

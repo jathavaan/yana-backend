@@ -6,6 +6,6 @@ public class Tag
     public string Name { get; set; } = null!;
     public DateTime DateCreated { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual UserProfile UserProfile { get; set; } = null!;
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
 }

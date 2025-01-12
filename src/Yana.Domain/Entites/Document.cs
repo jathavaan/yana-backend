@@ -7,7 +7,7 @@ public class Document
     public GridSize GridSize { get; set; }
     public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<UserProfile> Users { get; set; } = new List<UserProfile>();
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
     public virtual ICollection<Document> ParentDocuments { get; set; } = new List<Document>();
     public virtual ICollection<Document> ChildDocuments { get; set; } = new List<Document>();

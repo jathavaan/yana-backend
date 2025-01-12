@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Yana.Infrastructure.Services.UserService;
 
 namespace Yana.Api.Configurations;
 
@@ -14,10 +15,11 @@ internal static class BuilderConfiguration
         builder.Services.AddInfrastructureServices();
 
         builder.ConfigureDatabase();
+        builder.ConfigureDataProtector();
+        builder.ConfigureAuthenticationAndAuthorization();
 
         builder.ConfigureControllers();
         builder.ConfigureSwagger();
-        builder.ConfigureAuthenticationAndAuthorization();
 
         return builder;
     }
@@ -53,7 +55,7 @@ internal static class BuilderConfiguration
                 Scheme = "bearer"
             });
 
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
                 {
                     new OpenApiSecurityScheme
@@ -65,7 +67,7 @@ internal static class BuilderConfiguration
                         },
                         Scheme = "oauth2",
                         Name = "Bearer",
-                        In = ParameterLocation.Header,
+                        In = ParameterLocation.Header
                     },
                     new List<string>()
                 }
@@ -79,7 +81,6 @@ internal static class BuilderConfiguration
     private static void ConfigureDatabase(this WebApplicationBuilder builder)
     {
         if (builder.Environment.IsDevelopment())
-        {
             builder.Services.AddDbContext<YanaDbContext>(options =>
                 options.UseSqlServer(
                         builder.Configuration
@@ -88,7 +89,6 @@ internal static class BuilderConfiguration
                             .YanaDb
                     )
                     .EnableSensitiveDataLogging());
-        }
     }
 
     private static void ConfigureAuthenticationAndAuthorization(this WebApplicationBuilder builder)
@@ -107,7 +107,7 @@ internal static class BuilderConfiguration
                 if (googleAuthenticationOptions is null) return;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = googleAuthenticationOptions.IssuerUri,
+                    ValidIssuer = googleAuthenticationOptions.Issuer,
                     ValidAudience = googleAuthenticationOptions.ClientId,
                     IssuerSigningKey =
                         new SymmetricSecurityKey(Encoding.UTF8.GetBytes(googleAuthenticationOptions.ClientSecret)),
@@ -117,10 +117,20 @@ internal static class BuilderConfiguration
                     ValidateIssuerSigningKey = true
                 };
 
-                options.Authority = googleAuthenticationOptions.IssuerUri;
+                options.Authority = googleAuthenticationOptions.Issuer;
                 options.RequireHttpsMetadata = true;
             });
 
         builder.Services.AddAuthorization();
+    }
+
+    private static void ConfigureDataProtector(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddDataProtection();
+    }
+
+    private static void ConfigureMvc(WebApplicationBuilder builder)
+    {
+        builder.Services.AddMvc(options => { });
     }
 }

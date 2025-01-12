@@ -13,6 +13,6 @@ public class Citation
     public string? Url { get; set; }
     public DateOnly RetrievedDate { get; set; }
 
-    public virtual User User { get; set; } = null!;
+    public virtual UserProfile UserProfile { get; set; } = null!;
     public virtual Document? Document { get; set; }
 }
