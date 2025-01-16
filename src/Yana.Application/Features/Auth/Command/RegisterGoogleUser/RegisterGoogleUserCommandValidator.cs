@@ -13,8 +13,5 @@ public class RegisterGoogleUserCommandValidator : AbstractValidator<RegisterGoog
         RuleFor(x => x.User.Email)
             .EmailAddress()
             .NotEmpty();
-
-        RuleFor(x => x.RefreshToken)
-            .NotEmpty();
     }
 }

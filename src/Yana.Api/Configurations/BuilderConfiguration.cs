@@ -18,6 +18,7 @@ internal static class BuilderConfiguration
         builder.ConfigureDataProtector();
         builder.ConfigureAuthenticationAndAuthorization();
 
+        builder.ConfigureCors();
         builder.ConfigureControllers();
         builder.ConfigureSwagger();
 
@@ -132,5 +133,26 @@ internal static class BuilderConfiguration
     private static void ConfigureMvc(WebApplicationBuilder builder)
     {
         builder.Services.AddMvc(options => { });
+    }
+
+    private static void ConfigureCors(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("YanaLocalDevelopmentFrontend", policy =>
+            {
+                policy.WithOrigins("http://localhost:3000")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+
+        builder.WebHost.ConfigureKestrel(options =>
+        {
+            options.ConfigureHttpsDefaults(httpsOptions =>
+            {
+                httpsOptions.AllowAnyClientCertificate(); // Development only
+            });
+        });
     }
 }

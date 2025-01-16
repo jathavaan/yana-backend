@@ -13,6 +13,7 @@ public sealed class RegisterGoogleUserCommandHandler
     public async Task<CommandResponse<UserVm>> Handle(RegisterGoogleUserCommand request,
         CancellationToken cancellationToken)
     {
+        var refreshToken = "asdf"; // TODO: Obtain new refresh token here
         var user = await _userRepositoryService.UpsertUser(
             new UserProfileDto(
                 ExternalId: request.User.ExternalUserProfiles.First(x => x.AuthProvider == AuthProvider.Google).Id,
@@ -21,7 +22,7 @@ public sealed class RegisterGoogleUserCommandHandler
                 LastName: request.User.LastName,
                 AuthProvider: AuthProvider.Google
             ),
-            request.RefreshToken
+            refreshToken
         );
 
         return new CommandResponse<UserVm>
