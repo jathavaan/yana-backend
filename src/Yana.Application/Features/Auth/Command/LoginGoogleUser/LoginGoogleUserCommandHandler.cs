@@ -13,7 +13,7 @@ public class LoginGoogleUserCommandHandler : IRequestHandler<LoginGoogleUserComm
 
     public async Task<CommandResponse<bool>> Handle(LoginGoogleUserCommand request, CancellationToken cancellationToken)
     {
-        var result = await _tokenService.InsertRefreshToken(request.User.Id, request.RefreshToken, AuthProvider.Google);
+        var result = true; // TODO: Obtain new refresh token here
 
         if (!result)
         {

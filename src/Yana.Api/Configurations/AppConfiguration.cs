@@ -6,6 +6,7 @@ public static class AppConfiguration
     {
         if (app.Environment.IsDevelopment()) app.ConfigureSwagger();
 
+        app.ConfigureCors();
         app.UseHttpsRedirection();
         app.ConfigureAuthenticationAndAuthorization();
         app.MapControllers();
@@ -27,5 +28,10 @@ public static class AppConfiguration
     {
         app.UseAuthentication();
         app.UseAuthorization();
+    }
+
+    private static void ConfigureCors(this WebApplication app)
+    {
+        app.UseCors("YanaLocalDevelopmentFrontend");
     }
 }

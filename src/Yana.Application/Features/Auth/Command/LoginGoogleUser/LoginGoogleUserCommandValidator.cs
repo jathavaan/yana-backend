@@ -4,8 +4,14 @@ public class LoginGoogleUserCommandValidator : AbstractValidator<LoginGoogleUser
 {
     public LoginGoogleUserCommandValidator()
     {
-        RuleFor(x => x.RefreshToken)
-            .NotEmpty()
-            .WithMessage("Refresh token must be provided");
+        RuleFor(x => x.User)
+            .NotNull();
+
+        RuleFor(x => x.User.Id)
+            .NotEmpty();
+
+        RuleFor(x => x.User.Email)
+            .EmailAddress()
+            .NotEmpty();
     }
 }
