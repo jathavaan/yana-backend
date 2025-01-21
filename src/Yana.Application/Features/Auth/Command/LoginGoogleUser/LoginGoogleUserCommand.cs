@@ -1,7 +1,9 @@
 ﻿namespace Yana.Application.Features.Auth.Command.LoginGoogleUser;
 
-public sealed class LoginGoogleUserCommand(UserProfile user)
+public sealed class LoginGoogleUserCommand(AuthorizationCodeDto dto)
     : Command<CommandResponse<bool>>
 {
-    public UserProfile User { get; } = user;
+    public AuthorizationCodeDto Dto { get; } = dto;
 }
+
+public sealed record AuthorizationCodeDto(string AuthorizationCode);

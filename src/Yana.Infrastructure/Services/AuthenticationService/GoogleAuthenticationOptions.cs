@@ -1,4 +1,4 @@
-﻿namespace Yana.Infrastructure.Services.UserService;
+﻿namespace Yana.Infrastructure.Services.AuthenticationService;
 
 public sealed class GoogleAuthenticationOptions
 {
@@ -6,4 +6,6 @@ public sealed class GoogleAuthenticationOptions
     public string Issuer { get; init; } = null!;
     public string ClientId { get; init; } = null!;
     public string ClientSecret { get; init; } = null!;
+    public string[] Scopes { get; set; } = null!;
+    public string RedirectUri { get; set; } = null!;
 }

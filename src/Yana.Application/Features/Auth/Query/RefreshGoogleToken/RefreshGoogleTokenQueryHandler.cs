@@ -7,16 +7,21 @@ public class RefreshGoogleTokenQueryHandler : IRequestHandler<RefreshGoogleToken
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly ITokenService _tokenService;
+    private readonly IUserRepositoryService _userRepositoryService;
 
-    public RefreshGoogleTokenQueryHandler(IAuthenticationService authenticationService, ITokenService tokenService)
+    public RefreshGoogleTokenQueryHandler(IAuthenticationService authenticationService, ITokenService tokenService,
+        IUserRepositoryService userRepositoryService)
     {
         _authenticationService = authenticationService;
         _tokenService = tokenService;
+        _userRepositoryService = userRepositoryService;
     }
 
     public async Task<Response<AccessTokenVm>> Handle(RefreshGoogleTokenQuery request,
         CancellationToken cancellationToken)
     {
+        var externalId = await _userRepositoryService.GetExternalIdById(request.UserId, AuthProvider.Google);
+
         var refreshToken = await _tokenService.GetRefreshToken(request.UserId, AuthProvider.Google);
         if (refreshToken is null)
         {

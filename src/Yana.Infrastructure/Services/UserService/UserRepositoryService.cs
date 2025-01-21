@@ -1,16 +1,18 @@
-﻿using Yana.Domain.Enums;
+﻿using Microsoft.IdentityModel.Tokens;
+using Yana.Domain.Enums;
 
 namespace Yana.Infrastructure.Services.UserService;
 
-public class UserRepositoryService : IUserRepositoryService
+public sealed class UserRepositoryService : IUserRepositoryService
 {
     private readonly YanaDbContext _dbContext;
-    private readonly IEncryptionService _encryptionService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public UserRepositoryService(YanaDbContext dbContext, IEncryptionService encryptionService)
+    public UserRepositoryService(YanaDbContext dbContext, IEncryptionService encryptionService,
+        IAuthenticationService authenticationService)
     {
         _dbContext = dbContext;
-        _encryptionService = encryptionService;
+        _authenticationService = authenticationService;
     }
 
     public async Task<UserProfile?> GetUserById(string userId)
@@ -43,10 +45,9 @@ public class UserRepositoryService : IUserRepositoryService
             .Where(x => x.User.Id == userId && x.AuthProvider == authProvider)
             .FirstOrDefaultAsync();
 
-    public async Task<UserProfile> UpsertUser(UserProfileDto userDto, string refreshToken)
+    public async Task<UserProfile> UpsertUser(UserProfileDto userDto)
     {
         var user = await GetUserByEmail(userDto.Email);
-        var encryptedRefreshToken = _encryptionService.Encrypt(refreshToken);
 
         switch (user)
         {
@@ -59,7 +60,6 @@ public class UserRepositoryService : IUserRepositoryService
                     {
                         Id = userDto.ExternalId,
                         AuthProvider = userDto.AuthProvider,
-                        RefreshToken = encryptedRefreshToken
                     }
                 ];
 
@@ -77,7 +77,6 @@ public class UserRepositoryService : IUserRepositoryService
                         {
                             Id = userDto.ExternalId,
                             AuthProvider = userDto.AuthProvider,
-                            RefreshToken = encryptedRefreshToken
                         }
                     ]
                 };
@@ -86,8 +85,23 @@ public class UserRepositoryService : IUserRepositoryService
                 break;
         }
 
-
         await _dbContext.SaveChangesAsync();
         return user;
+    }
+
+    public async Task<bool> UpsertRefreshToken(UserProfile user, AuthProvider authProvider)
+    {
+        var externalUserProfile = user.ExternalUserProfiles.FirstOrDefault(x => x.AuthProvider == authProvider);
+        var authProviderUserId = externalUserProfile?.Id;
+        if (externalUserProfile is null || authProviderUserId is null) return false;
+
+        var refreshToken = await _authenticationService.GetRefreshToken(authProviderUserId!, "");
+        if (refreshToken.IsNullOrEmpty()) return false;
+
+        externalUserProfile.RefreshToken = refreshToken;
+        _dbContext.Update(externalUserProfile);
+        await _dbContext.SaveChangesAsync();
+
+        return true;
     }
 }

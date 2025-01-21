@@ -13,17 +13,24 @@ public sealed class RegisterGoogleUserCommandHandler
     public async Task<CommandResponse<UserVm>> Handle(RegisterGoogleUserCommand request,
         CancellationToken cancellationToken)
     {
-        var refreshToken = "asdf"; // TODO: Obtain new refresh token here
-        var user = await _userRepositoryService.UpsertUser(
-            new UserProfileDto(
-                ExternalId: request.User.ExternalUserProfiles.First(x => x.AuthProvider == AuthProvider.Google).Id,
-                Email: request.User.Email,
-                FirstName: request.User.FirstName,
-                LastName: request.User.LastName,
-                AuthProvider: AuthProvider.Google
-            ),
-            refreshToken
-        );
+        var user = await _userRepositoryService.UpsertUser(new UserProfileDto(
+            ExternalId: request.User.ExternalUserProfiles.First(x => x.AuthProvider == AuthProvider.Google).Id,
+            Email: request.User.Email,
+            FirstName: request.User.FirstName,
+            LastName: request.User.LastName,
+            AuthProvider: AuthProvider.Google
+        ));
+
+        var isRefreshTokenUpdated = await _userRepositoryService.UpsertRefreshToken(user, AuthProvider.Google);
+        if (!isRefreshTokenUpdated)
+        {
+            return new CommandResponse<UserVm>
+            {
+                ErrorCode = ErrorCode.Unauthorized,
+                ErrorMessage = "Failed to create user session"
+            };
+        }
+
 
         return new CommandResponse<UserVm>
         {
