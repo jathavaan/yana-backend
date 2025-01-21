@@ -1,14 +1,21 @@
-﻿namespace Yana.Infrastructure;
+﻿using System.IdentityModel.Tokens.Jwt;
+
+namespace Yana.Infrastructure;
 
 public static class InfrastructureServiceRegistration
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
-        services.AddTransient<IUserRepositoryService, UserRepositoryService>();
-        services.AddTransient<IUserAuthService, UserAuthService>();
-        services.AddTransient<ITokenService, TokenService>();
-        services.AddTransient<IEncryptionService, EncryptionService>();
-        services.AddTransient<IAuthenticationService, GoogleAuthenticationService>();
+        services.AddScoped<IUserRepositoryService, UserRepositoryService>();
+        services.AddScoped<IUserAuthService, UserAuthService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IEncryptionService, EncryptionService>();
+        services.AddScoped<IAuthenticationService, GoogleAuthenticationService>();
+
+        // Third party services
+        services.AddScoped<JwtSecurityTokenHandler>();
+
+        // Hosted services
 
         return services;
     }

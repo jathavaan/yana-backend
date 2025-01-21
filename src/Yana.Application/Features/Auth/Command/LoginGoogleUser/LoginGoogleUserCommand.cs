@@ -1,7 +1,7 @@
 ﻿namespace Yana.Application.Features.Auth.Command.LoginGoogleUser;
 
 public sealed class LoginGoogleUserCommand(AuthorizationCodeDto dto)
-    : Command<CommandResponse<bool>>
+    : Command<CommandResponse<AuthenticationVm>>
 {
     public AuthorizationCodeDto Dto { get; } = dto;
 }

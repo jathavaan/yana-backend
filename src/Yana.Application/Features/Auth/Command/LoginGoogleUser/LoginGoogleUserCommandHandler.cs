@@ -3,29 +3,27 @@ using Yana.Application.Contracts.TokenService;
 
 namespace Yana.Application.Features.Auth.Command.LoginGoogleUser;
 
-public class LoginGoogleUserCommandHandler : IRequestHandler<LoginGoogleUserCommand, CommandResponse<bool>>
+public class LoginGoogleUserCommandHandler : IRequestHandler<LoginGoogleUserCommand, CommandResponse<AuthenticationVm>>
 {
     private readonly ITokenService _tokenService;
-    private readonly IUserRepositoryService _userRepositoryService;
     private readonly IAuthenticationService _authenticationService;
 
-    public LoginGoogleUserCommandHandler(ITokenService tokenService, IUserRepositoryService userRepositoryService,
-        IAuthenticationService authenticationService)
+    public LoginGoogleUserCommandHandler(ITokenService tokenService, IAuthenticationService authenticationService)
     {
         _tokenService = tokenService;
-        _userRepositoryService = userRepositoryService;
         _authenticationService = authenticationService;
     }
 
-    public async Task<CommandResponse<bool>> Handle(LoginGoogleUserCommand request, CancellationToken cancellationToken)
+    public async Task<CommandResponse<AuthenticationVm>> Handle(LoginGoogleUserCommand request,
+        CancellationToken cancellationToken)
     {
         var (idToken, refreshToken) = await _authenticationService.GetUserTokens(request.Dto.AuthorizationCode);
+        var externalId = _tokenService.GetExternalIdFromIdToken(idToken);
+        var userId = await _tokenService.InsertRefreshToken(externalId, refreshToken, AuthProvider.Google);
 
-        var result = true;
-
-        if (!result)
+        if (userId is null)
         {
-            return new CommandResponse<bool>
+            return new CommandResponse<AuthenticationVm>
             {
                 ErrorCode = ErrorCode.NotFound,
                 ErrorMessage =
@@ -33,9 +31,9 @@ public class LoginGoogleUserCommandHandler : IRequestHandler<LoginGoogleUserComm
             };
         }
 
-        return new CommandResponse<bool>
+        return new CommandResponse<AuthenticationVm>
         {
-            Result = result
+            Result = new AuthenticationVm(userId, idToken)
         };
     }
 }
