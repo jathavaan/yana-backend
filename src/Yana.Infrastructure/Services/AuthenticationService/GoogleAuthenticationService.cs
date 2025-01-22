@@ -29,7 +29,7 @@ public class GoogleAuthenticationService : IAuthenticationService
         });
     }
 
-    public async Task<(string idToken, string refreshToken)> GetUserTokens(string authoirzationCode)
+    public async Task<(string? idToken, string? refreshToken)> GetUserTokens(string authoirzationCode)
     {
         var flow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
         {

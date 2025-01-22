@@ -18,9 +18,27 @@ public class LoginGoogleUserCommandHandler : IRequestHandler<LoginGoogleUserComm
         CancellationToken cancellationToken)
     {
         var (idToken, refreshToken) = await _authenticationService.GetUserTokens(request.Dto.AuthorizationCode);
-        var externalId = _tokenService.GetExternalIdFromIdToken(idToken);
-        var userId = await _tokenService.InsertRefreshToken(externalId, refreshToken, AuthProvider.Google);
+        if (idToken is null || refreshToken is null)
+        {
+            return new CommandResponse<AuthenticationVm>
+            {
+                ErrorCode = ErrorCode.Unauthorized,
+                ErrorMessage = "Failed to get user tokens"
+            };
+        }
 
+
+        var userDto = _tokenService.GetUserInformationFromIdToken(idToken);
+        if (userDto is null)
+        {
+            return new CommandResponse<AuthenticationVm>()
+            {
+                ErrorCode = ErrorCode.Unauthorized,
+                ErrorMessage = "Failed to construct a user object from ID token"
+            };
+        }
+
+        var userId = await _tokenService.InsertRefreshToken(userDto.ExternalId, refreshToken, AuthProvider.Google);
         if (userId is null)
         {
             return new CommandResponse<AuthenticationVm>

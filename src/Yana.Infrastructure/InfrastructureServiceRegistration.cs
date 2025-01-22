@@ -7,7 +7,6 @@ public static class InfrastructureServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
     {
         services.AddScoped<IUserRepositoryService, UserRepositoryService>();
-        services.AddScoped<IUserAuthService, UserAuthService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IEncryptionService, EncryptionService>();
         services.AddScoped<IAuthenticationService, GoogleAuthenticationService>();
