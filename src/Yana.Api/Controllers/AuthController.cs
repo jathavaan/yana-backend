@@ -10,18 +10,15 @@ public sealed class AuthController(IMediator mediator) : YanaControllerBase(medi
     [Produces("application/json")]
     [ApiConventionMethod(typeof(SwaggerApiConvention), nameof(SwaggerApiConvention.StatusResponseTypes))]
     [ActionName(nameof(RegisterGoogleUser))]
-    [GoogleUser]
-    public async Task<ActionResult<UserVm>> RegisterGoogleUser()
-        => await SendCommand<UserVm, RegisterGoogleUserCommand>(
-            new RegisterGoogleUserCommand(AuthenticatedUser!));
+    public async Task<ActionResult<AuthenticationVm>> RegisterGoogleUser(AuthorizationCodeDto dto)
+        => await SendCommand<AuthenticationVm, RegisterGoogleUserCommand>(new RegisterGoogleUserCommand(dto));
 
     [HttpPost("login/google")]
     [Produces("application/json")]
     [ApiConventionMethod(typeof(SwaggerApiConvention), nameof(SwaggerApiConvention.StatusResponseTypes))]
     [ActionName(nameof(LoginGoogleUser))]
-    [AuthorizeUser]
-    public async Task<ActionResult<bool>> LoginGoogleUser()
-        => await SendCommand<bool, LoginGoogleUserCommand>(new LoginGoogleUserCommand(AuthenticatedUser!));
+    public async Task<ActionResult<AuthenticationVm>> LoginGoogleUser(AuthorizationCodeDto dto)
+        => await SendCommand<AuthenticationVm, LoginGoogleUserCommand>(new LoginGoogleUserCommand(dto));
 
     [HttpPost("refresh-token/google")]
     [Produces("application/json")]

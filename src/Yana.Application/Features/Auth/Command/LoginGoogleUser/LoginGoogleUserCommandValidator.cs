@@ -4,14 +4,10 @@ public class LoginGoogleUserCommandValidator : AbstractValidator<LoginGoogleUser
 {
     public LoginGoogleUserCommandValidator()
     {
-        RuleFor(x => x.User)
-            .NotNull();
-
-        RuleFor(x => x.User.Id)
+        RuleFor(x => x.Dto)
             .NotEmpty();
 
-        RuleFor(x => x.User.Email)
-            .EmailAddress()
+        RuleFor(x => x.Dto.AuthorizationCode)
             .NotEmpty();
     }
 }

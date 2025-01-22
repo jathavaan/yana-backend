@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Yana.Infrastructure.Services.AuthenticationService;
 using Yana.Infrastructure.Services.UserService;
 
 namespace Yana.Api.Configurations;

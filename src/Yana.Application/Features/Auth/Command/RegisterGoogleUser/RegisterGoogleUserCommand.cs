@@ -1,6 +1,8 @@
-﻿namespace Yana.Application.Features.Auth.Command.RegisterGoogleUser;
+﻿using Yana.Application.Features.Auth.Command.LoginGoogleUser;
 
-public sealed class RegisterGoogleUserCommand(UserProfile user) : Command<CommandResponse<UserVm>>
+namespace Yana.Application.Features.Auth.Command.RegisterGoogleUser;
+
+public sealed class RegisterGoogleUserCommand(AuthorizationCodeDto dto) : Command<CommandResponse<AuthenticationVm>>
 {
-    public UserProfile User { get; } = user;
+    public AuthorizationCodeDto Dto { get; } = dto;
 }

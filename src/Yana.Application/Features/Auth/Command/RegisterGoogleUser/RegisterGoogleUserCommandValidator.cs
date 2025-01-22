@@ -4,14 +4,11 @@ public class RegisterGoogleUserCommandValidator : AbstractValidator<RegisterGoog
 {
     public RegisterGoogleUserCommandValidator()
     {
-        RuleFor(x => x.User)
+        RuleFor(x => x.Dto)
             .NotNull();
 
-        RuleFor(x => x.User.Id)
-            .NotEmpty();
-
-        RuleFor(x => x.User.Email)
-            .EmailAddress()
-            .NotEmpty();
+        RuleFor(x => x.Dto.AuthorizationCode)
+            .NotEmpty()
+            .WithMessage("Authorization code is required");
     }
 }

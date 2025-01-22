@@ -1,0 +1,21 @@
+name: Feature request
+description: Request a feature you want in the project
+tilte: "[Feature]: "
+labels: ["feature"]
+assignees:
+  - jathavaan
+
+body:
+  type: textarea
+  id: description
+  attributes:
+    label: Description of wanted feature
+    description: Please write a breif description:wqa
+     on the wanted feature
+  type: checkboxes
+  attribues:
+    label: 
+  type: markdown
+  attributes:
+    value: |
+
