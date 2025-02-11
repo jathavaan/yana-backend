@@ -1,0 +1,71 @@
+name: "User Story"
+description: "Create a new user story to describe a feature or requirement from an end-user perspective."
+title: "As a [role] I want [objective] for [motivation]"
+labels: [ "userstory", "backend" ]
+projects: [ "jathavaan/5" ]
+assignees:
+  - jathavaan
+
+body:
+  - type: textarea
+    id: user_story
+    attributes:
+      label: "User story description"
+      description: "Describe the feature in detail explaining how the feature should work in a happy- and unhappy-path scenarios"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Priority"
+      description: "How critical is this user story?"
+      options:
+        - High
+        - Medium
+        - Low
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: "Acceptance Criteria"
+      description: "Define the conditions that must be met for this user story to be considered complete."
+      placeholder: |
+        - Given [some context], when [action happens], then [expected outcome].
+        - The feature should function correctly under [specific condition].
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: "Dependencies"
+      description: "List any dependencies (e.g., other features, APIs, services) required for this user story to be completed."
+      placeholder: "- Dependent on API endpoint X"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: "## Non-functional requirements"
+
+  - type: markdown
+    attributes:
+      value: |
+        - API responses should be less than 500 ms
+        - Proper logging added for information and higher levels
+        - Endpoints must enfore strict authorization rules using JWT Bearer tokens
+        - System must only grant minimum permissions required
+
+  - type: markdown
+    attributes:
+      value: "## Resources"
+
+  - type: markdown
+    attributes:
+      value: |
+        - [API Docs](https://localhost:7189/swagger/index.html#/)
+        - [ER-diagram](https://dbdiagram.io/d/YANA-6777b9195406798ef730a281)
+        
