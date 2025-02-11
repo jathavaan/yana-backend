@@ -1,0 +1,61 @@
+﻿name: "Bug"
+description: "Create a new bug report to describe a defect or issue in the application."
+title: "Bug: [title]"
+labels: [ "bug", "backend" ]
+projects: [ "jathavaan/5" ]
+assignees:
+  - jathavaan
+
+body:
+  - type: textarea
+    id: bug_description
+    attributes:
+      label: "Bug description"
+      description: "Describe the bug in detail explaining what is happening and what should be happening."
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: "Steps to reproduce"
+      description: "List the steps to reproduce the bug."
+      placeholder: |
+        1. Call the endpoint '...' with the payload
+        2. Set breakpoint on line '...' in file '...'
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_results
+    attributes:
+      label: "Expected results"
+      description: "Describe what you expect to happen when the bug is not present."
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual_results
+    attributes:
+      label: "Actual results"
+      description: "Describe what is happening when the bug is present."
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: browser
+    attributes:
+      label: "Environment"
+      description: "Select the enviornment where the bug occurs."
+      options:
+        - label: "Production"
+        - label: "Development"
+        - label: "Local"
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots"
+      description: "Attach any screenshots or files that help explain the bug."
+    validations:
+      required: false
