@@ -1,0 +1,23 @@
+﻿name: "Task"
+description: "Create a new task to break down a user story into smaller, manageable tasks."
+labels: [ "task", "backend" ]
+projects: [ "jathavaan/5" ]
+assignees:
+  - jathavaan
+
+body:
+  - type: textarea
+    attributes:
+      label: "Task description"
+      description: "Describe the task in detail explaining how the task should be completed."
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: "Developer tasks"
+      description: "List the tasks that need to be completed to finish this task."
+      value: |
+        - Task 1
+        - Task 2
+        - Task 3
