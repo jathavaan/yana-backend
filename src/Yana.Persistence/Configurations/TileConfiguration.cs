@@ -14,20 +14,6 @@ public class TileConfiguration : IEntityTypeConfiguration<Tile>
             .ValueGeneratedNever()
             .HasColumnType("ntext");
 
-        builder.Property(x => x.XPosition)
-            .ValueGeneratedNever()
-            .IsRequired();
-
-        builder.Property(x => x.YPosition)
-            .ValueGeneratedNever()
-            .IsRequired();
-
-        builder.Property(x => x.Height)
-            .ValueGeneratedNever()
-            .IsRequired();
-
-        builder.Property(x => x.Width)
-            .ValueGeneratedNever();
 
         builder.Property(x => x.CreatedDate)
             .IsRequired();

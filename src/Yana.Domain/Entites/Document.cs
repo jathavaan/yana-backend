@@ -13,4 +13,5 @@ public class Document
     public virtual ICollection<Document> ChildDocuments { get; set; } = new List<Document>();
     public virtual ICollection<Tile> Tiles { get; set; } = new List<Tile>();
     public virtual ICollection<Citation> Citations { get; set; } = new List<Citation>();
+    public virtual ICollection<DocumentLayout> DocumentLayouts { get; set; } = new List<DocumentLayout>();
 }

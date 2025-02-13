@@ -6,6 +6,7 @@ public class YanaDbContext(DbContextOptions<YanaDbContext> options) : DbContext(
     public virtual DbSet<Document> Documents { get; set; }
     public virtual DbSet<DocumentHasTag> DocumentHasTag { get; set; }
     public virtual DbSet<DocumentHasUser> DocumentHasUser { get; set; }
+    public virtual DbSet<DocumentLayout> DocumentLayouts { get; set; }
     public virtual DbSet<DocumentReference> DocumentReferences { get; set; }
     public virtual DbSet<Tag> Tags { get; set; }
     public virtual DbSet<Tile> Tiles { get; set; }
