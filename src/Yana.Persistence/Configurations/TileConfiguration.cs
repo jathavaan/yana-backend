@@ -14,14 +14,13 @@ public class TileConfiguration : IEntityTypeConfiguration<Tile>
             .ValueGeneratedNever()
             .HasColumnType("ntext");
 
-
         builder.Property(x => x.CreatedDate)
             .IsRequired();
 
         builder
             .HasOne(x => x.Document)
             .WithMany(x => x.Tiles)
-            .OnDelete(DeleteBehavior.Cascade)
+            .OnDelete(DeleteBehavior.ClientCascade)
             .IsRequired();
 
         builder

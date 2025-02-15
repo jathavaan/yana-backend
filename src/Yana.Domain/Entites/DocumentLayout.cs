@@ -2,7 +2,7 @@
 
 public class DocumentLayout
 {
-    public string TileId { get; set; } = null!;
+    public  string TileId { get; set; } = null!;
     public LayoutSize LayoutSize { get; set; }
     public int XPosition { get; set; }
     public int YPosition { get; set; }

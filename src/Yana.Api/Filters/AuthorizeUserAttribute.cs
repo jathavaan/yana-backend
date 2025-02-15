@@ -36,10 +36,7 @@ public sealed class AuthorizeUserAttribute : AuthorizeAttribute, IAsyncActionFil
             return;
         }
 
-        if (context.Controller is YanaControllerBase controller)
-        {
-            controller.AuthenticatedUser = user;
-        }
+        if (context.Controller is YanaControllerBase controller) controller.AuthenticatedUser = user;
 
         await next();
     }

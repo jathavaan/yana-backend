@@ -370,7 +370,7 @@ namespace Yana.Persistence.Migrations
                     b.HasOne("Yana.Domain.Entites.Document", "Document")
                         .WithMany("DocumentLayouts")
                         .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Yana.Domain.Entites.Tile", "Tile")
@@ -430,7 +430,7 @@ namespace Yana.Persistence.Migrations
                     b.HasOne("Yana.Domain.Entites.Document", "Document")
                         .WithMany("Tiles")
                         .HasForeignKey("DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Document");

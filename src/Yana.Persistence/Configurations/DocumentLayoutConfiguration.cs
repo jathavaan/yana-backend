@@ -26,11 +26,12 @@ public class DocumentLayoutConfiguration : IEntityTypeConfiguration<DocumentLayo
             .WithMany(x => x.DocumentLayouts)
             .OnDelete(DeleteBehavior.Cascade)
             .HasForeignKey(x => x.TileId)
+            .HasPrincipalKey(x => x.Id)
             .IsRequired();
 
         builder.HasOne(x => x.Document)
             .WithMany(x => x.DocumentLayouts)
-            .OnDelete(DeleteBehavior.Cascade)
+            .OnDelete(DeleteBehavior.ClientCascade)
             .IsRequired();
     }
 }
