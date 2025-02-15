@@ -4,6 +4,8 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
 {
     public void Configure(EntityTypeBuilder<Document> builder)
     {
+        builder.ToTable(x => x.IsTemporal());
+
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
