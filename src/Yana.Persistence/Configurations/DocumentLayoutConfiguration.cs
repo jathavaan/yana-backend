@@ -4,6 +4,8 @@ public class DocumentLayoutConfiguration : IEntityTypeConfiguration<DocumentLayo
 {
     public void Configure(EntityTypeBuilder<DocumentLayout> builder)
     {
+        builder.ToTable(x => x.IsTemporal());
+
         builder.HasKey(x => new { x.TileId, x.LayoutSize });
 
         builder.Property(x => x.LayoutSize)
