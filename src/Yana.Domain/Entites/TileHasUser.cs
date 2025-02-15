@@ -2,7 +2,7 @@
 
 public class TileHasUser
 {
-    public int TileId { get; set; }
+    public string TileId { get; set; } = null!;
     public string UserId { get; set; } = null!;
     public DateTime EditedDate { get; set; }
 

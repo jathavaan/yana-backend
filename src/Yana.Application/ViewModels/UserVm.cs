@@ -1,6 +1,4 @@
-﻿using Yana.Domain.Enums;
-
-namespace Yana.Application.ViewModels;
+﻿namespace Yana.Application.ViewModels;
 
 public class UserVm
 {

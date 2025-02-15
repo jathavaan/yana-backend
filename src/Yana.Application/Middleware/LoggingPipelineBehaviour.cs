@@ -1,6 +1,4 @@
-﻿using Yana.Application.Common;
-
-namespace Yana.Application.Middleware;
+﻿namespace Yana.Application.Middleware;
 
 public class LoggingPipelineBehaviour<TRequest, TResponse>(
     ILogger<LoggingPipelineBehaviour<TRequest, TResponse>> logger

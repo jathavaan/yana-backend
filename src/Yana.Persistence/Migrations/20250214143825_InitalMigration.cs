@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Yana.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitalMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,16 +26,18 @@ namespace Yana.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UserProfiles",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AuthProvider = table.Column<int>(type: "int", nullable: false),
-                    LastLogindDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_UserProfiles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,13 +70,8 @@ namespace Yana.Persistence.Migrations
                 name: "Tiles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Content = table.Column<string>(type: "ntext", nullable: true),
-                    XPosition = table.Column<int>(type: "int", nullable: false),
-                    YPosition = table.Column<int>(type: "int", nullable: false),
-                    Width = table.Column<int>(type: "int", nullable: false),
-                    Height = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DocumentId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -104,7 +101,7 @@ namespace Yana.Persistence.Migrations
                     Pages = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RetrievedDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserProfileId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DocumentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -117,9 +114,9 @@ namespace Yana.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Citations_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Citations_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -132,7 +129,8 @@ namespace Yana.Persistence.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserProfileId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,9 +142,30 @@ namespace Yana.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DocumentHasUser_Users_UserId",
+                        name: "FK_DocumentHasUser_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExternalUserProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuthProvider = table.Column<int>(type: "int", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExternalUserProfiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExternalUserProfiles_UserProfiles_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -159,15 +178,43 @@ namespace Yana.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserProfileId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tags", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tags_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_Tags_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DocumentLayouts",
+                columns: table => new
+                {
+                    TileId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LayoutSize = table.Column<int>(type: "int", nullable: false),
+                    XPosition = table.Column<int>(type: "int", nullable: false),
+                    YPosition = table.Column<int>(type: "int", nullable: false),
+                    Width = table.Column<int>(type: "int", nullable: false),
+                    Height = table.Column<int>(type: "int", nullable: false),
+                    DocumentId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DocumentLayouts", x => new { x.TileId, x.LayoutSize });
+                    table.ForeignKey(
+                        name: "FK_DocumentLayouts_Documents_DocumentId",
+                        column: x => x.DocumentId,
+                        principalTable: "Documents",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_DocumentLayouts_Tiles_TileId",
+                        column: x => x.TileId,
+                        principalTable: "Tiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -176,9 +223,10 @@ namespace Yana.Persistence.Migrations
                 name: "TileHasUser",
                 columns: table => new
                 {
-                    TileId = table.Column<int>(type: "int", nullable: false),
+                    TileId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EditedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EditedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserProfileId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -190,9 +238,9 @@ namespace Yana.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TileHasUser_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_TileHasUser_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -227,9 +275,9 @@ namespace Yana.Persistence.Migrations
                 column: "DocumentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Citations_UserId",
+                name: "IX_Citations_UserProfileId",
                 table: "Citations",
-                column: "UserId");
+                column: "UserProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentHasTag_TagId",
@@ -237,9 +285,14 @@ namespace Yana.Persistence.Migrations
                 column: "TagId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DocumentHasUser_UserId",
+                name: "IX_DocumentHasUser_UserProfileId",
                 table: "DocumentHasUser",
-                column: "UserId");
+                column: "UserProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DocumentLayouts_DocumentId",
+                table: "DocumentLayouts",
+                column: "DocumentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DocumentReferences_ChildDocumentId",
@@ -247,14 +300,19 @@ namespace Yana.Persistence.Migrations
                 column: "ChildDocumentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tags_UserId",
-                table: "Tags",
+                name: "IX_ExternalUserProfiles_UserId",
+                table: "ExternalUserProfiles",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TileHasUser_UserId",
+                name: "IX_Tags_UserProfileId",
+                table: "Tags",
+                column: "UserProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TileHasUser_UserProfileId",
                 table: "TileHasUser",
-                column: "UserId");
+                column: "UserProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tiles_DocumentId",
@@ -275,7 +333,13 @@ namespace Yana.Persistence.Migrations
                 name: "DocumentHasUser");
 
             migrationBuilder.DropTable(
+                name: "DocumentLayouts");
+
+            migrationBuilder.DropTable(
                 name: "DocumentReferences");
+
+            migrationBuilder.DropTable(
+                name: "ExternalUserProfiles");
 
             migrationBuilder.DropTable(
                 name: "TileHasUser");
@@ -287,7 +351,7 @@ namespace Yana.Persistence.Migrations
                 name: "Tiles");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "Documents");

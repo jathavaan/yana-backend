@@ -32,7 +32,6 @@ public sealed class GoogleUserAttribute : AuthorizeAttribute, IAsyncActionFilter
 
         var user = await userRepositoryService!.GetUserByEmail(userDto.Email);
         if (user is null)
-        {
             user = new UserProfile
             {
                 Email = userDto.Email,
@@ -47,21 +46,15 @@ public sealed class GoogleUserAttribute : AuthorizeAttribute, IAsyncActionFilter
                     }
                 ]
             };
-        }
         else if (user.ExternalUserProfiles.All(x => x.AuthProvider != AuthProvider.Google))
-        {
             user.ExternalUserProfiles.Add(new ExternalUserProfile
             {
                 Id = userDto.ExternalId,
                 AuthProvider = AuthProvider.Google
             });
-        }
 
 
-        if (context.Controller is YanaControllerBase controller)
-        {
-            controller.AuthenticatedUser = user;
-        }
+        if (context.Controller is YanaControllerBase controller) controller.AuthenticatedUser = user;
 
         await next();
     }

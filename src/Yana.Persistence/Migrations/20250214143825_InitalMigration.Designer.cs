@@ -12,8 +12,8 @@ using Yana.Persistence.Context;
 namespace Yana.Persistence.Migrations
 {
     [DbContext(typeof(YanaDbContext))]
-    [Migration("20250111173555_RenamedEntities")]
-    partial class RenamedEntities
+    [Migration("20250214143825_InitalMigration")]
+    partial class InitalMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,6 +139,37 @@ namespace Yana.Persistence.Migrations
                     b.ToTable("DocumentHasUser");
                 });
 
+            modelBuilder.Entity("Yana.Domain.Entites.DocumentLayout", b =>
+                {
+                    b.Property<string>("TileId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("LayoutSize")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DocumentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
+
+                    b.Property<int>("XPosition")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YPosition")
+                        .HasColumnType("int");
+
+                    b.HasKey("TileId", "LayoutSize");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("DocumentLayouts");
+                });
+
             modelBuilder.Entity("Yana.Domain.Entites.DocumentReference", b =>
                 {
                     b.Property<string>("ParentDocumentId")
@@ -213,11 +244,9 @@ namespace Yana.Persistence.Migrations
 
             modelBuilder.Entity("Yana.Domain.Entites.Tile", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
                         .HasColumnType("ntext");
@@ -229,18 +258,6 @@ namespace Yana.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
-
-                    b.Property<int>("XPosition")
-                        .HasColumnType("int");
-
-                    b.Property<int>("YPosition")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DocumentId");
@@ -250,8 +267,8 @@ namespace Yana.Persistence.Migrations
 
             modelBuilder.Entity("Yana.Domain.Entites.TileHasUser", b =>
                 {
-                    b.Property<int>("TileId")
-                        .HasColumnType("int");
+                    b.Property<string>("TileId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -351,6 +368,25 @@ namespace Yana.Persistence.Migrations
                     b.Navigation("UserProfile");
                 });
 
+            modelBuilder.Entity("Yana.Domain.Entites.DocumentLayout", b =>
+                {
+                    b.HasOne("Yana.Domain.Entites.Document", "Document")
+                        .WithMany("DocumentLayouts")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Yana.Domain.Entites.Tile", "Tile")
+                        .WithMany("DocumentLayouts")
+                        .HasForeignKey("TileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Document");
+
+                    b.Navigation("Tile");
+                });
+
             modelBuilder.Entity("Yana.Domain.Entites.DocumentReference", b =>
                 {
                     b.HasOne("Yana.Domain.Entites.Document", "ChildDocument")
@@ -426,7 +462,14 @@ namespace Yana.Persistence.Migrations
                 {
                     b.Navigation("Citations");
 
+                    b.Navigation("DocumentLayouts");
+
                     b.Navigation("Tiles");
+                });
+
+            modelBuilder.Entity("Yana.Domain.Entites.Tile", b =>
+                {
+                    b.Navigation("DocumentLayouts");
                 });
 
             modelBuilder.Entity("Yana.Domain.Entites.UserProfile", b =>

@@ -1,6 +1,4 @@
-﻿using Yana.Application.Common;
-
-namespace Yana.Application.Features.User.Query.GetUserById;
+﻿namespace Yana.Application.Features.User.Query.GetUserById;
 
 public class GetUserByIdQuery(string userId) : Request<Response<UserVm>>
 {
