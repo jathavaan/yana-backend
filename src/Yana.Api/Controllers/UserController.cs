@@ -9,6 +9,4 @@ public class UserController(IMediator mediator) : YanaControllerBase(mediator)
     [AuthorizeUser]
     public async Task<ActionResult<UserVm>> GetUserById(string userId)
         => await SendQuery<UserVm, GetUserByIdQuery>(new GetUserByIdQuery(userId));
-
-
 }
