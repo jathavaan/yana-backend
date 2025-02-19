@@ -19,10 +19,10 @@ public sealed class GoogleUserAttribute : AuthorizeAttribute, IAsyncActionFilter
         }
 
         var userRepositoryService = context.HttpContext.RequestServices.GetService<IUserRepositoryService>();
-        var userAuthService = context.HttpContext.RequestServices.GetService<ITokenService>();
+        var tokenService = context.HttpContext.RequestServices.GetService<ITokenService>();
 
         var principal = httpContext.User;
-        var userDto = userAuthService!.GetUserFromPrincipal(principal);
+        var userDto = tokenService!.GetUserFromPrincipal(principal);
 
         if (userDto?.ExternalId == Guid.Empty.ToString() || string.IsNullOrEmpty(userDto?.Email))
         {
