@@ -3,5 +3,5 @@
 public interface ITileRepositoryService
 {
     public Task<Tile?> GetTile(string tileId);
-    public Task<bool> SaveTile(SaveTileDto dto);
+    public Task<bool> SaveTile(TileDto dto);
 }

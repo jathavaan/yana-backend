@@ -1,6 +1,6 @@
 ﻿using Yana.Application.Contracts.TileService;
 
-namespace Yana.Infrastructure.Services.TIleService;
+namespace Yana.Infrastructure.Services.TileService;
 
 public sealed class TileRepositoryService : ITileRepositoryService
 {
@@ -19,7 +19,7 @@ public sealed class TileRepositoryService : ITileRepositoryService
             .FirstOrDefaultAsync(x => x.Id == tileId);
 
 
-    public async Task<bool> SaveTile(SaveTileDto dto)
+    public async Task<bool> SaveTile(TileDto dto)
     {
         var document = await _documentRepositoryService.GetDocument(dto.DocumentId);
         if (document is null) return false;

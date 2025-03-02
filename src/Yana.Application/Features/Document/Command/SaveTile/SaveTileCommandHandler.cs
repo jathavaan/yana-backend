@@ -12,7 +12,16 @@ public class SaveTileCommandHandler : IRequestHandler<SaveTileCommand, CommandRe
 
     public async Task<CommandResponse<bool>> Handle(SaveTileCommand request, CancellationToken cancellationToken)
     {
-        var result = await _tileRepositoryService.SaveTile(request.Dto);
+        var result = await _tileRepositoryService.SaveTile(new TileDto(
+            request.TileId,
+            request.DocumentId,
+            request.Dto.Content,
+            request.Dto.LargeLayout,
+            request.Dto.MediumLayout,
+            request.Dto.SmallLayout,
+            request.Dto.XSmallLayout,
+            request.Dto.XxSmallLayout)
+        );
 
         return new CommandResponse<bool>()
         {

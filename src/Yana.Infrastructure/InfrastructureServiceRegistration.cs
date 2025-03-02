@@ -1,7 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-
-
-namespace Yana.Infrastructure;
+﻿namespace Yana.Infrastructure;
 
 public static class InfrastructureServiceRegistration
 {
@@ -12,6 +9,7 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IEncryptionService, EncryptionService>();
         services.AddScoped<IAuthenticationService, GoogleAuthenticationService>();
         services.AddScoped<IDocumentRepositoryService, DocumentRepositoryService>();
+        services.AddScoped<ITileRepositoryService, TileRepositoryService>();
 
         // Third party services
         services.AddScoped<JwtSecurityTokenHandler>();

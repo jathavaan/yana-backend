@@ -1,7 +1,9 @@
-﻿global using Microsoft.Extensions.DependencyInjection;
+﻿global using System.IdentityModel.Tokens.Jwt;
+global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Options;
 global using Google.Apis.Auth.OAuth2;
+
 global using Yana.Application.Contracts.UserService;
 global using Yana.Application.Contracts.EncryptionService;
 global using Yana.Application.Contracts.TokenService;
@@ -15,3 +17,5 @@ global using Yana.Infrastructure.Services.EncryptionService;
 global using Yana.Infrastructure.Services.TokenService;
 global using Yana.Infrastructure.Services.UserService;
 global using Yana.Infrastructure.Services.DocumentService;
+global using Yana.Application.Contracts.TileService;
+global using Yana.Infrastructure.Services.TileService;

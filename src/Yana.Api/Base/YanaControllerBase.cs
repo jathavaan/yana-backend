@@ -1,6 +1,6 @@
 ﻿namespace Yana.Api.Base;
 
-[Route("api/[controller]")]
+[Route("api/[controller]s")]
 [ApiConventionType(typeof(SwaggerApiConvention))]
 [ApiController]
 public abstract class YanaControllerBase(IMediator mediator) : ControllerBase
