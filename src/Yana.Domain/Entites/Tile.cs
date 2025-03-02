@@ -4,7 +4,7 @@ public class Tile
 {
     public string Id { get; set; } = null!;
     public string? Content { get; set; }
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public DateTime CreatedDate { get; init; } = DateTime.Now;
 
     public virtual Document Document { get; set; } = null!;
     public virtual ICollection<UserProfile> Users { get; set; } = new List<UserProfile>();

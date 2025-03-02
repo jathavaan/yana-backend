@@ -15,7 +15,7 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
         builder.Property(x => x.Type)
             .IsRequired();
 
-        builder.Property(x => x.GridSize)
+        builder.Property(x => x.Title)
             .IsRequired();
 
         builder.Property(x => x.CreatedDate)
