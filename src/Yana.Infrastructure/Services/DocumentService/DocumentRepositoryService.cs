@@ -20,15 +20,30 @@ public class DocumentRepositoryService : IDocumentRepositoryService
             .Include(x => x.DocumentHasUsers)
             .FirstOrDefaultAsync(x => x.Id == documentId);
 
-    public async Task CreateDocument(DocumentDto dto)
+    public async Task<Document> CreateDocument(UserProfile user, DocumentDto dto)
     {
         var document = new Document
         {
             Title = dto.Title,
-            Type = dto.Type
+            Type = dto.Type,
+            Tags = dto.Tags.Select(x => new Tag()
+                {
+                    Name = x.Name
+                })
+                .ToList(),
+            DocumentHasUsers =
+            [
+                new DocumentHasUser
+                {
+                    Role = DocumentRole.Owner
+                }
+            ],
+            Users = [user]
         };
 
         _dbContext.Documents.Add(document);
         await _dbContext.SaveChangesAsync();
+
+        return document;
     }
 }
