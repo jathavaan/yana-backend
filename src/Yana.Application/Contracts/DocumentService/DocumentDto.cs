@@ -2,4 +2,4 @@
 
 public sealed record DocumentDto(DocumentType Type, string Title, ICollection<TagDto> Tags);
 
-public sealed record TagDto(string Name);
+public sealed record TagDto(int Id);

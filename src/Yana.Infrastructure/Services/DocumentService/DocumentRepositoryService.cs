@@ -1,12 +1,14 @@
 ﻿namespace Yana.Infrastructure.Services.DocumentService;
 
-public class DocumentRepositoryService : IDocumentRepositoryService
+public sealed class DocumentRepositoryService : IDocumentRepositoryService
 {
     private readonly YanaDbContext _dbContext;
+    private readonly ITagRepositoryService _tagRepositoryService;
 
-    public DocumentRepositoryService(YanaDbContext dbContext)
+    public DocumentRepositoryService(YanaDbContext dbContext, ITagRepositoryService tagRepositoryService)
     {
         _dbContext = dbContext;
+        _tagRepositoryService = tagRepositoryService;
     }
 
     public async Task<bool> HasUserDocumentPermission(UserProfile user, string documentId, DocumentRole minimumRole)
@@ -26,11 +28,7 @@ public class DocumentRepositoryService : IDocumentRepositoryService
         {
             Title = dto.Title,
             Type = dto.Type,
-            Tags = dto.Tags.Select(x => new Tag()
-                {
-                    Name = x.Name
-                })
-                .ToList(),
+            Tags = await _tagRepositoryService.GetTags(dto.Tags.Select(x => x.Id).ToList()),
             DocumentHasUsers =
             [
                 new DocumentHasUser

@@ -1,8 +1,6 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿namespace Yana.Application.Features.Document.Command.CreateDocument;
 
-namespace Yana.Application.Features.Document.Command.CreateDocument;
-
-public class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentCommand, CommandResponse<DocumentVm>>
+public sealed class CreateDocumentCommandHandler : IRequestHandler<CreateDocumentCommand, CommandResponse<DocumentVm>>
 {
     private readonly IDocumentRepositoryService _documentRepositoryService;
 
