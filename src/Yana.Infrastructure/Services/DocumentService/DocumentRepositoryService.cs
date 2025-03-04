@@ -20,6 +20,7 @@ public sealed class DocumentRepositoryService : IDocumentRepositoryService
     public async Task<Document?> GetDocument(string documentId)
         => await _dbContext.Documents
             .Include(x => x.DocumentHasUsers)
+            .Include(x => x.Tiles)
             .FirstOrDefaultAsync(x => x.Id == documentId);
 
     public async Task<Document> CreateDocument(UserProfile user, DocumentDto dto)
