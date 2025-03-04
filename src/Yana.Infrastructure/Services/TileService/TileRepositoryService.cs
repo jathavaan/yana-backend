@@ -55,6 +55,19 @@ public sealed class TileRepositoryService : ITileRepositoryService
         return true;
     }
 
+    public async Task<bool> DeleteTile(string documentId, string tileId)
+    {
+        var tile = (await _documentRepositoryService.GetDocument(documentId))?.Tiles
+            .FirstOrDefault(x => x.Id == tileId);
+
+        if (tile is null) return false;
+
+        _dbContext.Tiles.Remove(tile);
+        await _dbContext.SaveChangesAsync();
+
+        return true;
+    }
+
     private DocumentLayout ConvertTileLayoutToDocumentLayout(TileLayout tileLayout, LayoutSize layoutSize)
         => new()
         {
