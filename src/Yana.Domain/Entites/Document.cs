@@ -3,11 +3,12 @@
 public class Document
 {
     public string Id { get; init; } = Guid.NewGuid().ToString();
+    public string Title { get; set; } = null!;
     public DocumentType Type { get; set; }
-    public GridSize GridSize { get; set; }
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public DateTime CreatedDate { get; init; } = DateTime.Now;
 
     public virtual ICollection<UserProfile> Users { get; set; } = new List<UserProfile>();
+    public virtual ICollection<DocumentHasUser> DocumentHasUsers { get; set; } = new List<DocumentHasUser>();
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
     public virtual ICollection<Document> ParentDocuments { get; set; } = new List<Document>();
     public virtual ICollection<Document> ChildDocuments { get; set; } = new List<Document>();

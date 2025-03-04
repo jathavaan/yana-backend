@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Yana.Persistence.Context;
 
@@ -11,9 +12,11 @@ using Yana.Persistence.Context;
 namespace Yana.Persistence.Migrations
 {
     [DbContext(typeof(YanaDbContext))]
-    partial class YanaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250302005746_UpdatedDocumentFields")]
+    partial class UpdatedDocumentFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

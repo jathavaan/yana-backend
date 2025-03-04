@@ -12,6 +12,7 @@ global using Yana.Api.Swagger.SwaggerApiConvention;
 global using Yana.Application.Common;
 global using Yana.Application;
 global using Yana.Application.Features.User.Query.GetUserById;
+global using Yana.Application.Features.Document.Command.SaveTile;
 global using Yana.Application.ViewModels;
 global using Yana.Domain.Entites;
 global using Yana.Infrastructure;

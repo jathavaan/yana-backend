@@ -4,6 +4,7 @@ using Yana.Application.Features.Auth.Query.RefreshGoogleToken;
 
 namespace Yana.Api.Controllers;
 
+[Route("api/[controller]")]
 public sealed class AuthController(IMediator mediator) : YanaControllerBase(mediator)
 {
     [HttpPost("register/google")]

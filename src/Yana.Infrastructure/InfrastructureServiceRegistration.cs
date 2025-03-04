@@ -1,5 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-
+﻿using Yana.Application.Contracts.TagService;
+using Yana.Infrastructure.Services.TagService;
 
 namespace Yana.Infrastructure;
 
@@ -12,6 +12,8 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IEncryptionService, EncryptionService>();
         services.AddScoped<IAuthenticationService, GoogleAuthenticationService>();
         services.AddScoped<IDocumentRepositoryService, DocumentRepositoryService>();
+        services.AddScoped<ITileRepositoryService, TileRepositoryService>();
+        services.AddScoped<ITagRepositoryService, TagRepositoryService>();
 
         // Third party services
         services.AddScoped<JwtSecurityTokenHandler>();

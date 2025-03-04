@@ -9,3 +9,5 @@ global using Yana.Application.Common;
 global using Yana.Domain.Entites;
 global using Yana.Domain.Enums;
 global using Yana.Application.Contracts.UserService;
+global using Yana.Application.Contracts.DocumentService;
+global using Yana.Application.Contracts.TileService;
