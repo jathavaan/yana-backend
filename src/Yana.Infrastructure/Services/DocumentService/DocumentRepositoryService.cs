@@ -19,7 +19,7 @@ public sealed class DocumentRepositoryService : IDocumentRepositoryService
 
     public async Task<Document?> GetDocument(string documentId)
         => await _dbContext.Documents
-            .Include(x => x.DocumentHasUsers)
+            // .Include(x => x.DocumentHasUsers)
             .Include(x => x.Tiles)
             .FirstOrDefaultAsync(x => x.Id == documentId);
 
@@ -30,15 +30,19 @@ public sealed class DocumentRepositoryService : IDocumentRepositoryService
             Title = dto.Title,
             Type = dto.Type,
             Tags = await _tagRepositoryService.GetTags(dto.Tags.Select(x => x.Id).ToList()),
-            DocumentHasUsers =
-            [
-                new DocumentHasUser
-                {
-                    Role = DocumentRole.Owner
-                }
-            ],
-            Users = [user]
         };
+
+        document.DocumentHasUsers =
+        [
+            new DocumentHasUser
+            {
+                UserId = user.Id,
+                DocumentId = document.Id,
+                Role = DocumentRole.Owner,
+                UserProfile = user,
+                Document = document
+            }
+        ];
 
         _dbContext.Documents.Add(document);
         await _dbContext.SaveChangesAsync();

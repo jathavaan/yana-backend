@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Yana.Persistence.Context;
 
@@ -11,9 +12,11 @@ using Yana.Persistence.Context;
 namespace Yana.Persistence.Migrations
 {
     [DbContext(typeof(YanaDbContext))]
-    partial class YanaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250330235213_RemovedDocumentHasUserField")]
+    partial class RemovedDocumentHasUserField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,9 +150,13 @@ namespace Yana.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserProfileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("DocumentId", "UserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("DocumentHasUser");
                 });
@@ -409,14 +416,14 @@ namespace Yana.Persistence.Migrations
             modelBuilder.Entity("Yana.Domain.Entites.DocumentHasUser", b =>
                 {
                     b.HasOne("Yana.Domain.Entites.Document", "Document")
-                        .WithMany("DocumentHasUsers")
+                        .WithMany()
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Yana.Domain.Entites.UserProfile", "UserProfile")
-                        .WithMany("DocumentHasUsers")
-                        .HasForeignKey("UserId")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -519,8 +526,6 @@ namespace Yana.Persistence.Migrations
                 {
                     b.Navigation("Citations");
 
-                    b.Navigation("DocumentHasUsers");
-
                     b.Navigation("DocumentLayouts");
 
                     b.Navigation("Tiles");
@@ -534,8 +539,6 @@ namespace Yana.Persistence.Migrations
             modelBuilder.Entity("Yana.Domain.Entites.UserProfile", b =>
                 {
                     b.Navigation("Citations");
-
-                    b.Navigation("DocumentHasUsers");
 
                     b.Navigation("ExternalUserProfiles");
 

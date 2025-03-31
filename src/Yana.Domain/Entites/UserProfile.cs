@@ -12,6 +12,7 @@ public class UserProfile
         new List<ExternalUserProfile>();
 
     public virtual ICollection<Document> Documents { get; set; } = new List<Document>();
+    public virtual ICollection<DocumentHasUser> DocumentHasUsers { get; set; } = new List<DocumentHasUser>();
     public virtual ICollection<Tile> Tiles { get; set; } = new List<Tile>();
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
     public virtual ICollection<Citation> Citations { get; set; } = new List<Citation>();
