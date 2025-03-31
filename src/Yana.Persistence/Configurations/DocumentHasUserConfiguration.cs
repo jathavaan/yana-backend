@@ -4,6 +4,8 @@ public class DocumentHasUserConfiguration : IEntityTypeConfiguration<DocumentHas
 {
     public void Configure(EntityTypeBuilder<DocumentHasUser> builder)
     {
+        builder.HasKey(x => new { x.DocumentId, x.UserId });
+
         builder.Property(x => x.Role)
             .IsRequired()
             .ValueGeneratedNever();

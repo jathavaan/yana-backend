@@ -24,7 +24,19 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
         builder
             .HasMany(x => x.Users)
             .WithMany(x => x.Documents)
-            .UsingEntity<DocumentHasUser>()
+            .UsingEntity<DocumentHasUser>(
+                r => r.HasOne(x => x.UserProfile)
+                    .WithMany(x => x.DocumentHasUsers)
+                    .HasForeignKey(x => x.UserId)
+                    .HasPrincipalKey(x => x.Id)
+                    .OnDelete(DeleteBehavior.Cascade),
+                l => l
+                    .HasOne(x => x.Document)
+                    .WithMany(x => x.DocumentHasUsers)
+                    .HasForeignKey(x => x.DocumentId)
+                    .HasPrincipalKey(x => x.Id)
+                    .OnDelete(DeleteBehavior.Cascade)
+            )
             .HasKey(x => new { x.DocumentId, x.UserId });
 
         builder
